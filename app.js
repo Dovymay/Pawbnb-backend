@@ -13,6 +13,7 @@ const express = require("express");
 
 const app = express();
 
+
 // ℹ️ This function is getting exported from the config folder. It runs most pieces of middleware
 require("./config")(app);
 
