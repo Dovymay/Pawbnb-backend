@@ -1,3 +1,4 @@
+
 const { Schema, model } = require('mongoose');
 
 const userSchema = new Schema({
@@ -6,14 +7,36 @@ const userSchema = new Schema({
     required: [true, 'Username is required.'],
     unique: true,
   },
+  firstName: {
+    type: String,
+  },
+  lastName: {
+    type: String,
+  },
   email: {
     type: String,
     required: [true, 'Email is required.'],
     unique: true,
   },
+  phone: {
+    type: String,
+  },
   password: {
     type: String,
     required: [true, 'Password is required.'],
+  },
+  role: {
+    type: String,
+    enum: ['user', 'host'],
+    default: 'user',
+  },
+  isActive: {
+    type: Boolean,
+    default: true,
+  },
+  avatar: {
+    type: String,
+    default: 'https://cdn-icons-png.freepik.com/512/4122/4122901.png',
   },
 });
 
