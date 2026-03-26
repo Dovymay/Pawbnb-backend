@@ -7,19 +7,13 @@ const userSchema = new Schema({
     required: [true, 'Username is required.'],
     unique: true,
   },
-  firstName: {
-    type: String,
-  },
-  lastName: {
+  name: {
     type: String,
   },
   email: {
     type: String,
     required: [true, 'Email is required.'],
     unique: true,
-  },
-  phone: {
-    type: String,
   },
   password: {
     type: String,
@@ -29,10 +23,6 @@ const userSchema = new Schema({
     type: String,
     enum: ['user', 'host'],
     default: 'user',
-  },
-  isActive: {
-    type: Boolean,
-    default: true,
   },
   avatar: {
     type: String,

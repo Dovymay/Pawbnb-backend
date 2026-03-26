@@ -36,16 +36,6 @@ router.get('/:id', isAuthenticated, async (req, res, next) => {
   }
 });
 
-// // POST /bookings
-// router.post('/bookings', isAuthenticated, async (req, res, next) => {
-//   try {
-//     const createdBooking = await Booking.create(req.body);
-//     res.status(201).json(createdBooking);
-//   } catch (error) {
-//     next(error);
-//   }
-// });
-
 // CREATE booking
 router.post('/', isAuthenticated, async (req, res, next) => {
   try {

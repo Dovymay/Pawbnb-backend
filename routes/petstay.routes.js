@@ -7,7 +7,7 @@ const router = express.Router();
 // GET all
 router.get('/', async (req, res, next) => {
   try {
-    const stays = await PetStay.find().populate('host');
+    const stays = await PetStay.find().populate('host', '-password -__v');
     res.status(200).json(stays);
   } catch (error) {
     next(error);
@@ -17,7 +17,10 @@ router.get('/', async (req, res, next) => {
 // GET one
 router.get('/:id', async (req, res, next) => {
   try {
-    const stay = await PetStay.findById().populate('host');
+    const stay = await PetStay.findById(req.params.id).populate(
+      'host',
+      '-password -__v'
+    );
     res.status(200).json(stay);
   } catch (error) {
     next(error);
