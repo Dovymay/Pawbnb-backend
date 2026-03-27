@@ -1,4 +1,3 @@
-
 const { Schema, model } = require('mongoose');
 
 const petStaySchema = new Schema({
@@ -35,6 +34,10 @@ const petStaySchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'User',
     required: true,
+  },
+  featured: {
+    type: Boolean,
+    default: false,
   },
 });
 

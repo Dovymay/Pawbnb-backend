@@ -4,7 +4,7 @@ const { isAuthenticated } = require('../middleware/isAuth');
 
 const router = express.Router();
 
-// GET all
+//GET all
 router.get('/', async (req, res, next) => {
   try {
     const stays = await PetStay.find().populate('host', '-password -__v');
@@ -14,7 +14,21 @@ router.get('/', async (req, res, next) => {
   }
 });
 
-// GET one
+//Featured stay
+router.get('/featured', async (req, res, next) => {
+  try {
+    const featuredStays = await PetStay.find({ featured: true }).populate(
+      'host',
+      '-password -__v'
+    );
+
+    res.json(featuredStays);
+  } catch (error) {
+    next(error);
+  }
+});
+
+//GET one
 router.get('/:id', async (req, res, next) => {
   try {
     const stay = await PetStay.findById(req.params.id).populate(
@@ -27,7 +41,7 @@ router.get('/:id', async (req, res, next) => {
   }
 });
 
-// POST Create
+//POST Create
 router.post('/', isAuthenticated, async (req, res, next) => {
   try {
     const newStay = await PetStay.create({
@@ -40,7 +54,7 @@ router.post('/', isAuthenticated, async (req, res, next) => {
   }
 });
 
-// PUT Update
+//PUT Update
 router.put('/:id', isAuthenticated, async (req, res, next) => {
   try {
     const stay = await PetStay.findById(req.params.id);
@@ -60,7 +74,7 @@ router.put('/:id', isAuthenticated, async (req, res, next) => {
   }
 });
 
-// DELETE
+//DELETE
 router.delete('/:id', isAuthenticated, async (req, res, next) => {
   const stay = await PetStay.findById(req.params.id);
 
