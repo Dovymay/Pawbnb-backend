@@ -28,6 +28,22 @@ router.get('/featured', async (req, res, next) => {
   }
 });
 
+//Filtered by city
+router.get('/location/:city', async (req, res, next) => {
+  try {
+    const { city } = req.params;
+
+    const filteredStays = await PetStay.find({ location: city }).populate(
+      'host',
+      '-password -__v'
+    );
+
+    res.json(filteredStays);
+  } catch (error) {
+    next(error);
+  }
+});
+
 //GET one
 router.get('/:id', async (req, res, next) => {
   try {
