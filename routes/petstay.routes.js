@@ -1,7 +1,7 @@
 const express = require('express');
 const PetStay = require('../models/PetStay.model');
 const { isAuthenticated } = require('../middleware/isAuth');
-
+const Booking = require('../models/Booking.model.js');
 const router = express.Router();
 
 //GET all
@@ -102,6 +102,33 @@ router.delete('/:id', isAuthenticated, async (req, res, next) => {
     res
       .status(200)
       .json({ message: `Stay ${req.params.id} deleted successfully` });
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.post('/search', async (req, res, next) => {
+  try {
+    const { activeSearch } = req.body;
+    const { city, startDate, endDate } = activeSearch;
+
+    const filteredStays = await PetStay.find({ location: city });
+    const idArr = filteredStays.map((s) => s._id);
+    const bookingsByStay = await Booking.find({
+      petStay: { $in: idArr },
+      startDate: { $lte: new Date(endDate) },
+      endDate: { $gt: new Date(startDate) },
+    });
+
+    const stayIdsBasedOnBooking = bookingsByStay.map((b) =>
+      b.petStay.toString()
+    );
+
+    const availableStays = filteredStays.filter(
+      (s) => !stayIdsBasedOnBooking.includes(s._id.toString())
+    );
+
+    res.json(availableStays);
   } catch (error) {
     next(error);
   }

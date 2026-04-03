@@ -98,21 +98,3 @@ router.delete('/:id', async (req, res, next) => {
 });
 
 module.exports = router;
-
-// 💬 Final Feedback
-
-// Your version:
-
-// 👉 80% correct (good structure, nice populate usage)
-
-// After fixes:
-
-// 👉 Production-ready for a bootcamp project
-
-// 🚀 What you should do next
-
-// Now you’re ready to:
-
-// 👉 connect bookings to frontend
-// 👉 build MyBookings page
-// 👉 create booking form
