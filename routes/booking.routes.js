@@ -2,11 +2,12 @@ const express = require('express');
 const Booking = require('../models/Booking.model');
 const PetStay = require('../models/PetStay.model');
 const { isAuthenticated } = require('../middleware/isAuth');
+const User = require('../models/User.model');
 
 const router = express.Router();
 
 // GET all bookings
-router.get('/', async (req, res, next) => {
+router.get('/', isAuthenticated, async (req, res, next) => {
   try {
     const bookings = await Booking.find({ user: req.payload._id })
       .populate('user')
@@ -41,10 +42,10 @@ router.post('/', isAuthenticated, async (req, res, next) => {
   try {
     const petStay = await PetStay.findById(req.body.petStay);
 
-    const days =
+    const days = Math.ceil(
       (new Date(req.body.endDate) - new Date(req.body.startDate)) /
-      (1000 * 60 * 60 * 24);
-
+        (1000 * 60 * 60 * 24)
+    );
     const totalPrice = days * petStay.pricePerNight;
 
     const booking = await Booking.create({
@@ -80,7 +81,7 @@ router.put('/:id', isAuthenticated, async (req, res, next) => {
 });
 
 // DELETE /bookings/:id
-router.delete('/:id', async (req, res, next) => {
+router.delete('/delete/:id', isAuthenticated, async (req, res, next) => {
   try {
     const booking = await Booking.findById(req.params.id);
 
