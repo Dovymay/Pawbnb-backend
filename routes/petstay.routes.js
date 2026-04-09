@@ -58,7 +58,7 @@ router.get('/:id', async (req, res, next) => {
 });
 
 //POST Create
-router.post('/', isAuthenticated, async (req, res, next) => {
+router.post('/create', isAuthenticated, async (req, res, next) => {
   try {
     const newStay = await PetStay.create({
       ...req.body,
@@ -71,7 +71,7 @@ router.post('/', isAuthenticated, async (req, res, next) => {
 });
 
 //PUT Update
-router.put('/:id', isAuthenticated, async (req, res, next) => {
+router.put('/update/:id', isAuthenticated, async (req, res, next) => {
   try {
     const stay = await PetStay.findById(req.params.id);
 
@@ -91,7 +91,7 @@ router.put('/:id', isAuthenticated, async (req, res, next) => {
 });
 
 //DELETE
-router.delete('/:id', isAuthenticated, async (req, res, next) => {
+router.delete('/delete/:id', isAuthenticated, async (req, res, next) => {
   const stay = await PetStay.findById(req.params.id);
 
   if (stay.host.toString() !== req.payload._id) {
