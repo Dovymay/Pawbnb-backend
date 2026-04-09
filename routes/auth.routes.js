@@ -9,7 +9,7 @@ const router = express.Router();
 //POST /auth/signup route
 router.post('/signup', async (req, res) => {
   try {
-    const { username, name, email, password, role, avatar } = req.body;
+    const { username, name, email, password, role } = req.body;
 
     //1. Make sure all info is sent from client
     if (!email || !password || !username) {
@@ -45,7 +45,6 @@ router.post('/signup', async (req, res) => {
       password: hashedPassword,
       name,
       role,
-      avatar,
     });
 
     return res
